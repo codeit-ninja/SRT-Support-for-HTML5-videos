@@ -9,12 +9,10 @@ document.addEventListener("DOMContentLoaded", function () {
      */
     function convertSrtToVtt() 
     {
-        this.id = '_' + Math.random().toString(36).substr(2, 9);
-        
         /**
-         * DOM Object of current element
+         * Generate an unique identifier
          */
-        var self = document.getElementById(this.id);
+        this.id = '_' + Math.random().toString(36).substr(2, 9);
         
         /**
          * All tracks assigned to current video element
@@ -101,6 +99,6 @@ document.addEventListener("DOMContentLoaded", function () {
     
     for(var i = 0;i < videoElements.length;i++) 
     {
-        videoElements[i].addEventListener('loadstart', convertSrtToVtt);
+        videoElements[i].addEventListener('canplay', convertSrtToVtt);
     }
 });
