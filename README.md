@@ -20,3 +20,6 @@ The *file* given in the `src` of the `track` element will be converted to a `blo
 ````html
 <track label="English" kind="subtitles" srclang="en" src="blob:https://example.com/1114ad19-4df0-4817-9517-cf1b1878bc5e" default />
 ````
+
+### Demo
+[Click here to see it working](https://codepen.io/richardmauritz/pen/vbPORR)
