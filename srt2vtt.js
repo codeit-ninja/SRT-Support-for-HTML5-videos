@@ -35,11 +35,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 
                 if(subtitle.isSrt(subtitle.track.src)) 
                 {
-                    var client = new XMLHttpRequest();
-                    client.open('GET', subtitle.track.src);
-                    client.onreadystatechange = function() 
-                    {
-                        subtitle.convert(client.responseText).then(
+					fetch (subtitle.track.src)
+						.then(x => x.arrayBuffer()) // not x.text() so encoding can be used
+						.then(y => {Const decoder = new TextDecoder(); // Can put encoding alternative like Windows-1251 inside the brackets
+						    subtitle.convert(decoder.decode(y)).then(
                             function (file) 
                             {
                                 /**
@@ -47,9 +46,8 @@ document.addEventListener("DOMContentLoaded", function () {
                                  */
                                 subtitle.track.src = file   
                             }
-                        );
-                    }
-                    client.send();
+                            )
+						});
                 }
             },
             /**
