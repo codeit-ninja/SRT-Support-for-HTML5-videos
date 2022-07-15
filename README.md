@@ -1,25 +1,55 @@
-# Add SRT files to the HTML5 track element
-Officialy only VTT files are supported by the HTML5 track element. When using this script, you don't have to convert your SRT files into VTT files.
-This will be done directly by this script.
+# 💐 Add support for SRT subtitles in HTML5 video elements
+
+Officially only VTT files are supported by the HTML5 track element. 
+This package will convert your SRT subtitles on the fly to VTT subtitles.
+
+### 👉 What's new in v2?
+
+- Added [TextDecoder](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder?retiredLocale=nl) to support all kinds of encodings
+    - SRT can be encoded in [multiple formats](https://en.wikipedia.org/wiki/SubRip#Text_encoding), while WebVTT should only be [encoded in UTF-8](https://www.w3.org/TR/webvtt1/#file-structure) format.
+- Does not break the TextTrack selection in video elements
+  - The previous version broke the TextTrack selection in the captions' menu. So when you had multiple captions you could not switch between them.
+- Is available as a package (ES module) or as a ready to use script
+
+### Installation
+
+As a NPM package, works both in the browser and NodeJS
+
+```text
+npm install srt-support-for-html5-videos
+```
+
+CDN
+- Ready to use script, just include it, and it will parse all video elements to convert the tracks
+```text
+https://cdn.jsdelivr.net/gh/codeit-ninja/SRT-Support-for-HTML5-videos@master/dist/main.iife.js
+```
+
+ES Module
+- Use as ES Module, see usage section
+```text
+https://cdn.jsdelivr.net/gh/codeit-ninja/SRT-Support-for-HTML5-videos@master/dist/main.es.js
+```
 
 ### Usage
-Nothing different than the usual way, only now `.srt` files are allowed as well :)
+If you installed it as a package using NPM or as an ES Module using the CDN, you have to call the `transformSrtTracks()` manually in order to transform the tracks.
 
-````html
-<video width="320" height="240" controls>
-	<source src="/path/to/your/video.mp4" type="video/mp4">
-	<source src="/path/to/your/video.ogg" type="video/ogg">
+```javascript
+// If using NPM
+import { transformSrtTracks } from 'srt-support-for-html5-videos'
+// If using CDN
+import { transformSrtTracks } from 'https://cdn.jsdelivr.net/gh/codeit-ninja/SRT-Support-for-HTML5-videos@dev/dist/main.es.js';
 
-	<track label="English" kind="subtitles" srclang="en" src="path/to/your/subtitle-en.srt" default />
-	<track label="Deutsch" kind="subtitles" srclang="de" src="path/to/your/subtitle-de.srt" />
-	<track label="Espa�ol" kind="subtitles" srclang="es" src="path/to/your/subtitle-es.srt" />
-</video>
-````
+// Single video element
+const video = document.getElementById('video');
 
-The *file* given in the `src` of the `track` element will be converted to a `blob` *vtt* file. Eg:
-````html
-<track label="English" kind="subtitles" srclang="en" src="blob:https://example.com/1114ad19-4df0-4817-9517-cf1b1878bc5e" default />
-````
+transformSrtTracks(video);
 
-### Demo
-[Click here to see it working](https://codepen.io/richardmauritz/pen/vbPORR)
+// All video elements
+const videos = document.querySelectorAll('video');
+
+[...videos].forEach(transformSrtTracks);
+```
+
+### Support me
+[<img src="https://www.buymeacoffee.com/assets/img/guidelines/download-assets-sm-1.svg">](https://www.buymeacoffee.com/codeit)
