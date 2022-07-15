@@ -1,4 +1,4 @@
-import Cue from "./src/cue"
+import Cue from "./src/cue.js"
 
 /**
  * Converts a SRT cue into a VTT compatible cue
