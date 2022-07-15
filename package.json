@@ -11,7 +11,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "npm run build:esm && npm run build:esm",
+    "build": "npm run build:iife && npm run build:esm",
     "build:iife": "vite build",
     "build:esm": "vite --config vite.config.esm.js build",
     "preview": "vite preview",

@@ -8,7 +8,7 @@
  *               _/ |    
  *              |__/    
  */
-import { hmsToSeconds, toVttCue } from './helpers.js';
+import { hmsToSeconds, toVttCue } from './src/helpers.js';
 import { transformSrtTracks } from './src/transformer.js';
 
 export {

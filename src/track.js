@@ -1,5 +1,5 @@
 import Cue from "./cue.js";
-import { toVttCue } from '../helpers.js';
+import { toVttCue } from './helpers.js';
 
 export default class Track {
     /**
