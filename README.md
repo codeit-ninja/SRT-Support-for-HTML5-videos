@@ -36,9 +36,9 @@ If you installed it as a package using NPM or as an ES Module using the CDN, you
 
 ```javascript
 // If using NPM
-import { transformSrtTracks } from 'srt-support-for-html5-videos'
+import { transformSrtTracks } from 'srt-support-for-html5-videos';
 // If using CDN
-import { transformSrtTracks } from 'https://cdn.jsdelivr.net/gh/codeit-ninja/SRT-Support-for-HTML5-videos@dev/dist/main.es.js';
+import { transformSrtTracks } from 'https://cdn.jsdelivr.net/gh/codeit-ninja/SRT-Support-for-HTML5-videos/dist/main.es.js';
 
 // Single video element
 const video = document.getElementById('video');
@@ -49,6 +49,40 @@ transformSrtTracks(video);
 const videos = document.querySelectorAll('video');
 
 [...videos].forEach(transformSrtTracks);
+```
+
+Some more functions are exported, these are just helper functions, you can import and use them if you have any use for them.
+
+```javascript
+/**
+ * Converts a SRT cue into a VTT compatible cue
+ * 
+ * For example
+ *
+ * 1
+ * 00:00:00,498 --> 00:00:02,827
+ * Here's what I love most
+ * about food and diet.
+ *
+ * Will be converted into
+ *
+ * Cue {
+ *     number: 1,
+ *     startTime: 0.498
+ *     endTime: 2.827,
+ *     text: 'Here\'s what I love most\nabout food and diet.'
+ * }
+ *
+ */
+import { toVttCue } from 'srt-support-for-html5-videos';
+/**
+ * Converts a VTT or SRT timing `string` 
+ * to a `number` in seconds + milliseconds
+ * 
+ * *Example*
+ * const seconds = hmsToSeconds('00:00:02.827'); // 2.827
+ */
+import { hmsToSeconds } from 'srt-support-for-html5-videos';
 ```
 
 ### Support me
