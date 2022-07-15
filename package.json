@@ -1,0 +1,17 @@
+{
+  "name": "srt-support-for-html5-videos",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "main.js",
+  "browser": "browser.js",
+  "scripts": {
+    "dev": "vite",
+    "build:iife": "vite build",
+    "build:esm": "vite --config vite.config.esm.js build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^3.0.0"
+  }
+}
