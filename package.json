@@ -1,6 +1,5 @@
 {
   "name": "srt-support-for-html5-videos",
-  "private": true,
   "version": "2.0.0",
   "type": "module",
   "main": "main.js",
