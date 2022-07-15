@@ -1,3 +1,3 @@
-import { transform } from './src/transformer';
+import { transformSrtTracks } from './src/transformer';
 
-document.addEventListener('DOMContentLoaded', () => [...document.querySelectorAll('video')].forEach(transform));
+document.addEventListener('DOMContentLoaded', () => [...document.querySelectorAll('video')].forEach(transformSrtTracks));

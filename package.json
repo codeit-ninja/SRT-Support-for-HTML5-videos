@@ -1,10 +1,14 @@
 {
   "name": "srt-support-for-html5-videos",
   "private": true,
-  "version": "0.0.0",
+  "version": "2.0.0",
   "type": "module",
   "main": "main.js",
-  "browser": "browser.js",
+  "author": {
+    "email": "richard@codeit.ninja",
+    "name": "Richard",
+    "url": "https://codeit.ninja"
+  },
   "scripts": {
     "dev": "vite",
     "build:iife": "vite build",

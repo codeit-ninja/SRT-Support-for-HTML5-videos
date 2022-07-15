@@ -1,13 +1,13 @@
 var o = Object.defineProperty;
-var d = (n, e, t) => e in n ? o(n, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : n[e] = t;
-var s = (n, e, t) => (d(n, typeof e != "symbol" ? e + "" : e, t), t);
-class c {
-  constructor(e, t, i, a) {
+var c = (n, e, t) => e in n ? o(n, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : n[e] = t;
+var s = (n, e, t) => (c(n, typeof e != "symbol" ? e + "" : e, t), t);
+class d {
+  constructor(e, t, i, r) {
     s(this, "number");
     s(this, "startTime");
     s(this, "endTime");
     s(this, "text");
-    this.number = e, this.startTime = t, this.endTime = i, this.text = a;
+    this.number = e, this.startTime = t, this.endTime = i, this.text = r;
   }
 }
 function l(n) {
@@ -20,9 +20,9 @@ function l(n) {
     text: n.split(/\r?\n/g).slice(2, n.split(/\r?\n/g).length).join(`
 `)
   };
-  return new c(e.number, e.timing.start, e.timing.end, e.text);
+  return new d(e.number, a(e.timing.start), a(e.timing.end), e.text);
 }
-function r(n) {
+function a(n) {
   for (var e = n.split(":"), t = 0, i = 1; e.length > 0; )
     t += i * parseFloat(e.pop(), 10), i *= 60;
   return t;
@@ -51,13 +51,11 @@ async function f(n) {
       return;
     await t.parse();
     const i = n.addTextTrack(t.kind, t.label, t.lang);
-    t.cues.forEach((a) => i.addCue(new VTTCue(r(a.startTime), r(a.endTime), a.text))), t.default && (i.mode = "showing"), console.log(t);
+    t.cues.forEach((r) => i.addCue(new VTTCue(r.startTime, r.endTime, r.text))), t.default && (i.mode = "showing"), console.log(t);
   });
 }
 export {
-  c as Cue,
-  h as Track,
-  r as hmsToSeconds,
+  a as hmsToSeconds,
   l as toVttCue,
-  f as transform
+  f as transformSrtTracks
 };
