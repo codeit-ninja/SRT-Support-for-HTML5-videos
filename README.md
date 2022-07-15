@@ -51,6 +51,15 @@ const videos = document.querySelectorAll('video');
 [...videos].forEach(transformSrtTracks);
 ```
 
+If your SRT file is encoded in a different format than *UTF-8* you must specify the encoding format in the `track` element using the `data-encoding` *attribute*.
+
+```html
+<video src="/path/to/video.mp4">
+  <track src="/path/to/subtitle_en.srt" label="English" srclang="en" data-encoding="iso-8859-2" kind="subtitles" default>
+  <track src="/path/to/subtitle_nl.srt" label="Nederlands" srclang="nl" data-encoding="iso-8859-2" kind="subtitles">
+</video>
+```
+
 Some more functions are exported, these are just helper functions, you can import and use them if you have any use for them.
 
 ```javascript
