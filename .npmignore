@@ -1,6 +1,6 @@
 .github
 .idea
 
-dist/*
+dist/*.js
 assets/*
 node_modules/*

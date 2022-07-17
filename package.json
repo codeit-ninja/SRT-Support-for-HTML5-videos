@@ -1,6 +1,6 @@
 {
   "name": "srt-support-for-html5-videos",
-  "version": "2.2.7",
+  "version": "2.2.8",
   "repository": "https://github.com/codeit-ninja/SRT-Support-for-HTML5-videos",
   "type": "module",
   "main": "main.js",
