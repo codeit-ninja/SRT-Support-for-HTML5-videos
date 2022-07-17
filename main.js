@@ -8,11 +8,13 @@
  *               _/ |    
  *              |__/    
  */
-import { hmsToSeconds, toVttCue } from './src/helpers.js';
+import { hmsToSeconds, toVttCue, srt2vtt, fetchTrack } from './src/helpers.js';
 import { transformSrtTracks } from './src/transformer.js';
 
 export {
     hmsToSeconds,
     toVttCue,
-    transformSrtTracks
+    transformSrtTracks,
+    srt2vtt,
+    fetchTrack
 }

@@ -4,12 +4,14 @@ Officially only VTT files are supported by the HTML5 track element.
 This package will convert your SRT subtitles on the fly to VTT subtitles.
 
 ### 👉 What's new in v2?
-
+- Updated code base to modern JavaScript
 - Added [TextDecoder](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder?retiredLocale=nl) to support all kinds of encodings
     - SRT can be encoded in [multiple formats](https://en.wikipedia.org/wiki/SubRip#Text_encoding), while WebVTT should only be [encoded in UTF-8](https://www.w3.org/TR/webvtt1/#file-structure) format.
 - Does not break the TextTrack selection in video elements
   - The previous version broke the TextTrack selection in the captions' menu. So when you had multiple captions you could not switch between them.
 - Is available as a package (ES module) or as a ready to use script
+- No external dependencies
+- More functionality included
 
 ### Installation
 
@@ -19,13 +21,13 @@ As a NPM package, works both in the browser and NodeJS
 npm install srt-support-for-html5-videos
 ```
 
-CDN
+**CDN**
 - Ready to use script, just include it, and it will parse all video elements to convert the tracks
 ```text
 https://cdn.jsdelivr.net/gh/codeit-ninja/SRT-Support-for-HTML5-videos@master/dist/main.iife.js
 ```
 
-ES Module
+**ES Module**
 - Use as ES Module, see usage section
 ```text
 https://cdn.jsdelivr.net/gh/codeit-ninja/SRT-Support-for-HTML5-videos@master/dist/main.es.js
@@ -38,7 +40,7 @@ If you installed it as a package using NPM or as an ES Module using the CDN, you
 // If using NPM
 import { transformSrtTracks } from 'srt-support-for-html5-videos';
 // If using CDN
-import { transformSrtTracks } from 'https://cdn.jsdelivr.net/gh/codeit-ninja/SRT-Support-for-HTML5-videos/dist/main.es.js';
+import { transformSrtTracks } from 'https://cdn.jsdelivr.net/gh/codeit-ninja/srt-support-for-html5-videos/dist/main.es.js';
 
 // Single video element
 const video = document.getElementById('video');
@@ -60,7 +62,11 @@ If your SRT file is encoded in a different format than *UTF-8* you must specify 
 </video>
 ```
 
+### Other functions
 Some more functions are exported, these are just helper functions, you can import and use them if you have any use for them.
+
+#### toVttCue
+Function is internally used to covert a srt cue into a WebVTT compatible cue.
 
 ```javascript
 /**
@@ -84,14 +90,41 @@ Some more functions are exported, these are just helper functions, you can impor
  *
  */
 import { toVttCue } from 'srt-support-for-html5-videos';
+```
+#### hmsToSeconds
+Converts a `HH:MM:SS.MS` string into a *number in seconds*
+
+```javascript
 /**
  * Converts a VTT or SRT timing `string` 
  * to a `number` in seconds + milliseconds
- * 
- * *Example*
- * const seconds = hmsToSeconds('00:00:02.827'); // 2.827
  */
 import { hmsToSeconds } from 'srt-support-for-html5-videos';
+
+const seconds = hmsToSeconds('00:00:02.827'); // 2.827
+```
+#### fetchTrack
+Fetches the contents of a track and returns the body.
+
+```javascript
+/**
+ * Fetches the contents of a track source
+ */
+import { fetchTrack } from 'srt-support-for-html5-videos';
+
+const content = await fetchTrack('https://example.com/path/my-subtitle.srt');
+```
+
+#### srt2vtt
+Convert SRT to VTT
+
+```javascript
+/**
+ * Converts SRT formatted string into a WebVTT formated string
+ */
+import { srt2vtt } from 'srt-support-for-html5-videos';
+
+const vtt = srt2vtt(srt);
 ```
 
 ### Support me

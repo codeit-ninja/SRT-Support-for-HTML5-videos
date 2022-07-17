@@ -1,14 +1,15 @@
 import Track from './track.js';
 
 /**
+ * Converts all SRT files into WebVTT files.
  * 
  * @param {HTMLVideoElement} video 
  */
 export async function transformSrtTracks(video) {
-    let tracks = [...video.querySelectorAll('track')].map(track => new Track(track));
+    const tracks = [...video.querySelectorAll('track')].map(track => new Track(track));
 
-    tracks.forEach(async track => {
-        if ( ! track.needsTransform ) return;
+    for (const track of tracks) {
+        if ( ! track.needsTransform ) continue;
         /**
          * Fetch track from URL and parse its content
          * We need to do before we can use it.
@@ -28,7 +29,5 @@ export async function transformSrtTracks(video) {
         if ( track.default ) {
             t.mode = 'showing';
         }
-
-        console.log(track);
-    })
+    }
 }

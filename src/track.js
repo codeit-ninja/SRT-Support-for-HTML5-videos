@@ -1,45 +1,65 @@
-import Cue from "./cue.js";
-import { toVttCue } from './helpers.js';
+import { toVttCue, fetchTrack } from './helpers.js';
 
+/**
+ * @property {string}   src
+ * @property {string}   encoding
+ * @property {string}   lang
+ * @property {string}   kind
+ * @property {string}   label
+ * @property {string}   default
+ * @property {string}   body
+ * @property {boolean}     needsTransform
+ * @property {Cue[]}    cues
+ */
 export default class Track {
     /**
+     * @readonly
      * @type {string}
      */
     src;
     /**
+     * @readonly
      * @type {string}
      */
     encoding;
     /**
+     * @readonly
      * @type {string}
      */
     lang;
     /**
+     * @readonly
      * @type {string}
      */
     kind;
     /**
+     * @readonly
      * @type {string}
      */
     label;
     /**
+     * @readonly
      * @type {boolean}
      */
     default;
     /**
+     * @readonly
      * @type {string}
      */
-    content;
+    body;
     /**
+     * @readonly
      * @type {boolean}
      */
     needsTransform;
     /**
+     * @readonly
      * @type {Cue[]}
      */
     cues = [];
 
     /**
+     * Parses a `HTMLTrackElement`
      * 
      * @param {HTMLTrackElement} track 
      */
@@ -50,19 +70,11 @@ export default class Track {
         this.kind = track.kind;
         this.label = track.label;
         this.default = track.default;
-        this.needsTransform = true;
-
-        if ( this.src.endsWith('.vtt') ) {
-            this.needsTransform = false;
-        }
+        this.needsTransform = !this.src.endsWith('.vtt');
     }
 
     async parse() {
-        const decoder = new TextDecoder(this.encoding);
-        const doFetch = await fetch(this.src);
-        const arrayBuffer = await doFetch.arrayBuffer();
-
-        this.content = decoder.decode(arrayBuffer);
-        this.cues = this.content.split(/\r?\n\r?\n/g).map(toVttCue);
+        this.body = await fetchTrack(this.src);
+        this.cues = this.body.split(/\r?\n\r?\n/g).map(toVttCue);
     }
 }

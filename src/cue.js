@@ -1,8 +1,8 @@
 /**
  * A valid VTT cue
  * 
- * The properties of this class are compatible with VTTCue
- * and can be used to create a new VTTCue
+ * The properties of this class are compatible with `VTTCue`
+ * and can be used to create a `new VTTCue` instance
  * 
  * *Example*
  * ```js
@@ -16,30 +16,35 @@
  */
 export default class Cue {
     /**
+     * @readonly
      * @type {number}
      */
     number;
 
     /**
+     * @readonly
      * @type {number}
      */
     startTime;
 
     /**
+     * @readonly
      * @type {number}
      */
     endTime;
 
     /**
+     * @readonly
      * @type {string}
      */
     text;
 
     /**
-     * 
-     * @param {number} startTime 
-     * @param {number} endTime 
-     * @param {string} text 
+     *
+     * @param {number} number
+     * @param {number} startTime
+     * @param {number} endTime
+     * @param {string} text
      */
     constructor(number, startTime, endTime, text) {
         this.number = number;
