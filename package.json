@@ -11,13 +11,15 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "npm run build:iife && npm run build:esm",
-    "build:iife": "vite build",
+    "build": "rmdir dist /S /Q && npm run build:iife && npm run build:esm && npm run build:source",
+    "build:source": "vite --config vite.config.js build",
+    "build:iife": "vite --config vite.config.iife.js build",
     "build:esm": "vite --config vite.config.esm.js build",
     "preview": "vite preview",
     "publish": "npm run build"
   },
   "devDependencies": {
+    "rollup-plugin-cleanup": "^3.2.1",
     "vite": "^3.0.0"
   }
 }
