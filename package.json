@@ -1,9 +1,10 @@
 {
   "name": "srt-support-for-html5-videos",
-  "version": "2.2.5",
+  "version": "2.2.6",
+  "repository": "https://github.com/codeit-ninja/SRT-Support-for-HTML5-videos",
   "type": "module",
   "main": "main.js",
-  "repository": "https://github.com/codeit-ninja/SRT-Support-for-HTML5-videos",
+  "types": "dist/main.d.ts",
   "author": {
     "email": "richard@codeit.ninja",
     "name": "Richard",
@@ -11,7 +12,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "npm run build:iife && npm run build:esm && npm run build:source",
+    "build": "npm run build:iife && npm run build:esm && npm run build:source && tsc",
     "build:source": "vite --config vite.config.js build",
     "build:iife": "vite --config vite.config.iife.js build",
     "build:esm": "vite --config vite.config.esm.js build",
