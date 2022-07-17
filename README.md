@@ -12,6 +12,7 @@ This package will convert your SRT subtitles on the fly to VTT subtitles.
 - Is available as a package (ES module) or as a ready to use script
 - No external dependencies
 - More functionality included
+- TypeScript support
 
 ### Installation
 

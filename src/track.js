@@ -1,4 +1,5 @@
 import { toVttCue, fetchTrack } from './helpers.js';
+import Cue from './cue.js';
 
 /**
  * @property {string}   src
