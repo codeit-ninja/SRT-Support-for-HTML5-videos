@@ -1,0 +1,6 @@
+.github
+.idea
+
+dist/*.js
+assets/*
+node_modules/*
