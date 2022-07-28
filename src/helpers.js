@@ -1,5 +1,18 @@
 import Cue from "./cue.js";
+import { SrtValidationError } from "./errors/SrtValidationError.js";
 
+/**
+ * Check if given string is in a valid SRT format
+ *
+ * @param {string} str
+ * @return {boolean}
+ */
+export function isValid(str) {
+    const startsWithNumber = /^\d+/.test(str);
+    const hasSrtTimingFormat = /\d+:\d+:\d+,\d+\s+-->\s+\d+:\d+:\d+,\d+/.test(str);
+
+    return ! ( !startsWithNumber || !hasSrtTimingFormat );
+}
 /**
  * Converts an SRT cue into a VTT compatible cue
  * 
@@ -25,8 +38,14 @@ import Cue from "./cue.js";
  * 
  * @param {string} srtCue
  * @returns Cue
+ *
+ * @throws SrtValidationError
  */
 export function toVttCue(srtCue) {
+    if( ! isValid(srtCue) ) {
+        throw new SrtValidationError('Not a valid SRT cue');
+    }
+
     const convertedCue = {
         number: parseInt(srtCue.match(/^\d+/g)[0]),
         timing: {
@@ -39,15 +58,15 @@ export function toVttCue(srtCue) {
     return new Cue(convertedCue.number, hmsToSeconds(convertedCue.timing.start), hmsToSeconds(convertedCue.timing.end), convertedCue.text);
 }
 /**
- * Converts a VTT or SRT timing `string` 
+ * Converts a VTT or SRT timing `string`
  * to a `number` in seconds + milliseconds
- * 
+ *
  * *Example*
  * ```js
  * const seconds = hmsToSeconds('00:00:02.827'); // 2.827
  * ```
- * 
- * @param {string} str 
+ *
+ * @param {string} str
  * @returns number
  */
 export function hmsToSeconds(str) {
@@ -77,7 +96,7 @@ export async function fetchTrack(src, encoding = 'utf-8') {
     return fetch(src).then(r => r.arrayBuffer()).then(r => new TextDecoder(encoding).decode(r));
 }
 /**
- * Converts SRT formatted string into a WebVTT formated string
+ * Converts SRT formatted string into a WebVTT formatted string
  * 
  * *Example*
  * 
@@ -109,9 +128,9 @@ export async function fetchTrack(src, encoding = 'utf-8') {
  * and we're totally in charge
  * ```
  * 
- * @param {string} srtBody
+ * @param {string} srt
  * @returns string
  */
-export function srt2vtt(srtBody) {
-    return 'WEBVTT\n\n' + srtBody.split(/\n/g).map(line => line.replace(/((\d+:){0,2}\d+),(\d+)/g, '$1.$3')).join('\n');
+export function srt2vtt(srt) {
+    return 'WEBVTT\n\n' + srt.split(/\n/g).map(line => line.replace(/((\d+:){0,2}\d+),(\d+)/g, '$1.$3')).join('\n');
 }

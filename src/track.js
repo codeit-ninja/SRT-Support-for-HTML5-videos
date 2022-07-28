@@ -9,13 +9,12 @@ import Cue from './cue.js';
  * @property {string}   label
  * @property {string}   default
  * @property {string}   body
- * @property {boolean}     needsTransform
  * @property {Cue[]}    cues
  */
 export default class Track {
     /**
      * @readonly
-     * @type {string}
+     * @type {string|undefined}
      */
     src;
     /**
@@ -50,32 +49,40 @@ export default class Track {
     body;
     /**
      * @readonly
-     * @type {boolean}
-     */
-    needsTransform;
-    /**
-     * @readonly
      * @type {Cue[]}
      */
     cues = [];
 
     /**
-     * Parses a `HTMLTrackElement`
-     * 
-     * @param {HTMLTrackElement} track 
+     * @param {Track} track
+     * @constructor
      */
     constructor(track) {
         this.src = track.src;
-        this.encoding = track.dataset.encoding;
-        this.lang = track.srclang;
+        this.encoding = track.encoding || 'UTF-8';
+        this.lang = track.lang;
         this.kind = track.kind;
         this.label = track.label;
-        this.default = track.default;
-        this.needsTransform = !this.src.endsWith('.vtt');
+        this.default = track.default || false;
+        this.body = track.body;
+        this.cues = track.cues;
     }
 
-    async parse() {
-        this.body = await fetchTrack(this.src);
-        this.cues = this.body.split(/\r?\n\r?\n/g).map(toVttCue);
+    /**
+     * Parses a `HTMLTrackElement`
+     *
+     * @param {HTMLTrackElement} track
+     */
+    static async fromHTML(track) {
+        let t = {
+            src: track.src,
+            encoding: track.dataset.encoding,
+            lang: track.srclang,
+            kind: track.kind,
+            label: track.label,
+            default: track.default
+        }
+
+        return new Track(t);
     }
 }
