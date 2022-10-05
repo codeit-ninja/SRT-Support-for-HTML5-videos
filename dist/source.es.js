@@ -77,6 +77,8 @@ class Cue {
  * @returns Cue
  */
 function toVttCue(srtCue) {
+    if (srtCue == '')
+        return [];
     const convertedCue = {
         number: parseInt(srtCue.match(/^\d+/g)[0]),
         timing: {
@@ -121,6 +123,8 @@ function hmsToSeconds(str) {
  * @returns Promise<string>
  */
 async function fetchTrack(src, encoding = 'utf-8') {
+    if (encoding == '')
+        encoding = "utf-8";
     return fetch(src).then(r => r.arrayBuffer()).then(r => new TextDecoder(encoding).decode(r));
 }
 
@@ -193,11 +197,11 @@ class Track {
         this.kind = track.kind;
         this.label = track.label;
         this.default = track.default;
-        this.needsTransform = !this.src.endsWith('.vtt');
+        this.needsTransform = !this.src.toLowerCase().endsWith('.vtt');
     }
     async parse() {
-        this.body = await fetchTrack(this.src);
-        this.cues = this.body.split(/\r?\n\r?\n/g).map(toVttCue);
+        this.body = await fetchTrack(this.src, thus.encoding);
+        this.cues = this.body.split(/\r?\n\r?\n/g).flatMap(toVttCue);
     }
 }
 
