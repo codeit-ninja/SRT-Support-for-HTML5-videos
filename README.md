@@ -117,7 +117,9 @@ const content = await fetchTrack('https://example.com/path/my-subtitle.srt');
 ```
 
 #### srt2vtt
-Convert SRT to VTT
+Convert SRT to VTT.
+
+There is no advanced API returning to add extra *VTT* sections like a header, comment or styles.
 
 ```javascript
 /**
