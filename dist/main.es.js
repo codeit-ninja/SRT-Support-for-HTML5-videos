@@ -1,43 +1,49 @@
 var c = Object.defineProperty;
-var d = (n, t, e) => t in n ? c(n, t, { enumerable: !0, configurable: !0, writable: !0, value: e }) : n[t] = e;
-var s = (n, t, e) => (d(n, typeof t != "symbol" ? t + "" : t, e), e);
-class o {
-  constructor(t, e, r, i) {
+var o = (e, t, n) => t in e ? c(e, t, { enumerable: !0, configurable: !0, writable: !0, value: n }) : e[t] = n;
+var s = (e, t, n) => (o(e, typeof t != "symbol" ? t + "" : t, n), n);
+class d {
+  constructor(t, n, r, a) {
     s(this, "number");
     s(this, "startTime");
     s(this, "endTime");
     s(this, "text");
-    this.number = t, this.startTime = e, this.endTime = r, this.text = i;
+    this.number = t, this.startTime = n, this.endTime = r, this.text = a;
   }
 }
-function l(n) {
-  const t = {
-    number: parseInt(n.match(/^\d+/g)[0]),
-    timing: {
-      start: n.match(/(\d+:){2}\d+,\d+/g)[0].replace(",", "."),
-      end: n.match(/(\d+:){2}\d+,\d+/g)[1].replace(",", ".")
-    },
-    text: n.split(/\r?\n/g).slice(2, n.split(/\r?\n/g).length).join(`
+function l(e) {
+  try {
+    if (!e || e === " ")
+      return !1;
+    const t = {
+      number: parseInt(e.match(/^\d+/g)[0]),
+      timing: {
+        start: e.match(/(\d+:){2}\d+,\d+/g)[0].replace(",", "."),
+        end: e.match(/(\d+:){2}\d+,\d+/g)[1].replace(",", ".")
+      },
+      text: e.split(/\r?\n/g).slice(2, e.split(/\r?\n/g).length).join(`
 `)
-  };
-  return new o(t.number, a(t.timing.start), a(t.timing.end), t.text);
+    };
+    return new d(t.number, i(t.timing.start), i(t.timing.end), t.text);
+  } catch {
+    return !1;
+  }
 }
-function a(n) {
-  let t = n.split(":"), e = 0, r = 1;
+function i(e) {
+  let t = e.split(":"), n = 0, r = 1;
   for (; t.length > 0; )
-    e += r * parseFloat(t.pop(), 10), r *= 60;
-  return e;
+    n += r * parseFloat(t.pop(), 10), r *= 60;
+  return n;
 }
-async function h(n, t = "utf-8") {
-  return fetch(n).then((e) => e.arrayBuffer()).then((e) => new TextDecoder(t).decode(e));
+async function h(e, t = "utf-8") {
+  return (!t || t === "") && (t = "utf-8"), fetch(e).then((n) => n.arrayBuffer()).then((n) => new TextDecoder(t).decode(n));
 }
-function f(n) {
+function u(e) {
   return `WEBVTT
 
-` + n.split(/\n/g).map((t) => t.replace(/((\d+:){0,2}\d+),(\d+)/g, "$1.$3")).join(`
+` + e.split(/\n/g).map((t) => t.replace(/((\d+:){0,2}\d+),(\d+)/g, "$1.$3")).join(`
 `);
 }
-class m {
+class f {
   constructor(t) {
     s(this, "src");
     s(this, "encoding");
@@ -48,26 +54,26 @@ class m {
     s(this, "body");
     s(this, "needsTransform");
     s(this, "cues", []);
-    this.src = t.src, this.encoding = t.dataset.encoding, this.lang = t.srclang, this.kind = t.kind, this.label = t.label, this.default = t.default, this.needsTransform = !this.src.endsWith(".vtt");
+    this.src = t.src, this.encoding = t.dataset.encoding, this.lang = t.srclang, this.kind = t.kind, this.label = t.label, this.default = t.default, this.needsTransform = !this.src.toLowerCase().endsWith(".vtt");
   }
   async parse() {
-    this.body = await h(this.src), this.cues = this.body.split(/\r?\n\r?\n/g).map(l);
+    this.body = await h(this.src, this.encoding), this.cues = this.body.split(/\r?\n\r?\n/g).map(l).filter(Boolean);
   }
 }
-async function g(n) {
-  const t = [...n.querySelectorAll("track")].map((e) => new m(e));
-  for (const e of t) {
-    if (!e.needsTransform)
+async function T(e) {
+  const t = [...e.querySelectorAll("track")].map((n) => new f(n));
+  for (const n of t) {
+    if (!n.needsTransform)
       continue;
-    await e.parse();
-    const r = n.addTextTrack(e.kind, e.label, e.lang);
-    e.cues.forEach((i) => r.addCue(new VTTCue(i.startTime, i.endTime, i.text))), e.default && (r.mode = "showing");
+    await n.parse();
+    const r = e.addTextTrack(n.kind, n.label, n.lang);
+    n.cues.forEach((a) => r.addCue(new VTTCue(a.startTime, a.endTime, a.text))), n.default && (r.mode = "showing");
   }
 }
 export {
   h as fetchTrack,
-  a as hmsToSeconds,
-  f as srt2vtt,
+  i as hmsToSeconds,
+  u as srt2vtt,
   l as toVttCue,
-  g as transformSrtTracks
+  T as transformSrtTracks
 };

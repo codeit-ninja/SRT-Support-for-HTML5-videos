@@ -71,11 +71,11 @@ export default class Track {
         this.kind = track.kind;
         this.label = track.label;
         this.default = track.default;
-        this.needsTransform = !this.src.endsWith('.vtt');
+        this.needsTransform = !this.src.toLowerCase().endsWith('.vtt');
     }
 
     async parse() {
-        this.body = await fetchTrack(this.src);
-        this.cues = this.body.split(/\r?\n\r?\n/g).map(toVttCue);
+        this.body = await fetchTrack(this.src, this.encoding);
+        this.cues = this.body.split(/\r?\n\r?\n/g).map(toVttCue).filter(Boolean);
     }
 }

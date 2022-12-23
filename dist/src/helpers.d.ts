@@ -24,7 +24,7 @@
  * @param {string} srtCue
  * @returns Cue
  */
-export function toVttCue(srtCue: string): Cue;
+export function toVttCue(srtCue: string): false | Cue;
 /**
  * Converts a VTT or SRT timing `string`
  * to a `number` in seconds + milliseconds

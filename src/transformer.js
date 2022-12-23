@@ -7,7 +7,7 @@ import Track from './track.js';
  */
 export async function transformSrtTracks(video) {
     const tracks = [...video.querySelectorAll('track')].map(track => new Track(track));
-
+    
     for (const track of tracks) {
         if ( ! track.needsTransform ) continue;
         /**

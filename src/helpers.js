@@ -27,16 +27,24 @@ import Cue from "./cue.js";
  * @returns Cue
  */
 export function toVttCue(srtCue) {
-    const convertedCue = {
-        number: parseInt(srtCue.match(/^\d+/g)[0]),
-        timing: {
-            start: srtCue.match(/(\d+:){2}\d+,\d+/g)[0].replace(',', '.'),
-            end: srtCue.match(/(\d+:){2}\d+,\d+/g)[1].replace(',', '.')
-        },
-        text: srtCue.split(/\r?\n/g).slice(2, srtCue.split(/\r?\n/g).length).join('\n')
+    try {
+        if( ! srtCue || srtCue === ' ' ) {
+            return false;
+        }
+    
+        const convertedCue = {
+            number: parseInt(srtCue.match(/^\d+/g)[0]),
+            timing: {
+                start: srtCue.match(/(\d+:){2}\d+,\d+/g)[0].replace(',', '.'),
+                end: srtCue.match(/(\d+:){2}\d+,\d+/g)[1].replace(',', '.')
+            },
+            text: srtCue.split(/\r?\n/g).slice(2, srtCue.split(/\r?\n/g).length).join('\n')
+        }
+    
+        return new Cue(convertedCue.number, hmsToSeconds(convertedCue.timing.start), hmsToSeconds(convertedCue.timing.end), convertedCue.text);
+    } catch(e) {
+        return false;
     }
-
-    return new Cue(convertedCue.number, hmsToSeconds(convertedCue.timing.start), hmsToSeconds(convertedCue.timing.end), convertedCue.text);
 }
 /**
  * Converts a VTT or SRT timing `string` 
@@ -74,6 +82,10 @@ export function hmsToSeconds(str) {
  * @returns Promise<string>
  */
 export async function fetchTrack(src, encoding = 'utf-8') {
+    if( ! encoding || encoding === '' ) {
+        encoding = 'utf-8';
+    }
+
     return fetch(src).then(r => r.arrayBuffer()).then(r => new TextDecoder(encoding).decode(r));
 }
 /**
