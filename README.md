@@ -25,13 +25,13 @@ npm install srt-support-for-html5-videos
 **CDN**
 - Ready to use script, just include it, and it will parse all video elements to convert the tracks
 ```text
-https://cdn.jsdelivr.net/gh/codeit-ninja/SRT-Support-for-HTML5-videos@master/dist/main.iife.js
+https://cdn.jsdelivr.net/npm/srt-support-for-html5-videos/dist/main.iife.js
 ```
 
 **ES Module**
 - Use as ES Module, see usage section
 ```text
-https://cdn.jsdelivr.net/gh/codeit-ninja/SRT-Support-for-HTML5-videos@master/dist/main.es.js
+https://cdn.jsdelivr.net/npm/srt-support-for-html5-videos/dist/main.es.js
 ```
 
 ### Usage
@@ -41,7 +41,7 @@ If you installed it as a package using NPM or as an ES Module using the CDN, you
 // If using NPM
 import { transformSrtTracks } from 'srt-support-for-html5-videos';
 // If using CDN
-import { transformSrtTracks } from 'https://cdn.jsdelivr.net/gh/codeit-ninja/srt-support-for-html5-videos/dist/main.es.js';
+import { transformSrtTracks } from 'https://cdn.jsdelivr.net/npm/srt-support-for-html5-videos/dist/main.es.js';
 
 // Single video element
 const video = document.getElementById('video');
