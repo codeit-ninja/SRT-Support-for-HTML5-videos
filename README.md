@@ -1,6 +1,6 @@
 # 💐 Add support for SRT subtitles in HTML5 video elements
 
-> ✅ This package uses **0** external dependencies!
+✅ This package uses **0** external dependencies!
 
 Officially only VTT files are supported by the HTML5 track element. 
 This package will convert your SRT subtitles on the fly to VTT subtitles.
