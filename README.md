@@ -4,21 +4,8 @@
 
 **Why is zero external dependencies important?**
 
-Using external dependencies not only make you code base very large, but can and will pose a security risks over time.
-
 Officially only VTT files are supported by the HTML5 track element. 
 This package will convert your SRT subtitles on the fly to VTT subtitles.
-
-### 👉 What's new in v2?
-- Updated code base to modern JavaScript
-- Added [TextDecoder](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder?retiredLocale=nl) to support all kinds of encodings
-    - SRT can be encoded in [multiple formats](https://en.wikipedia.org/wiki/SubRip#Text_encoding), while WebVTT should only be [encoded in UTF-8](https://www.w3.org/TR/webvtt1/#file-structure) format.
-- Does not break the TextTrack selection in video elements
-  - The previous version broke the TextTrack selection in the captions' menu. So when you had multiple captions you could not switch between them.
-- Is available as a package (ES module) or as a ready to use script
-- No external dependencies
-- More functionality included
-- TypeScript support
 
 ### Installation
 
