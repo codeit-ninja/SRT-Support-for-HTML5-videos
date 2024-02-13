@@ -2,8 +2,6 @@
 
 > ✅ This package uses **0** external dependencies!
 
-**Why is zero external dependencies important?**
-
 Officially only VTT files are supported by the HTML5 track element. 
 This package will convert your SRT subtitles on the fly to VTT subtitles.
 
