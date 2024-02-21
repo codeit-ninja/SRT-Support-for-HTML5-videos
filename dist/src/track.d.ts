@@ -18,6 +18,11 @@ export default class Track {
     constructor(track: HTMLTrackElement);
     /**
      * @readonly
+     * @type {HTMLTrackElement}
+     */
+    readonly element: HTMLTrackElement;
+    /**
+     * @readonly
      * @type {string}
      */
     readonly src: string;
@@ -63,5 +68,5 @@ export default class Track {
     readonly cues: Cue[];
     parse(): Promise<void>;
 }
-import Cue from "./cue.js";
+import Cue from './cue.js';
 //# sourceMappingURL=track.d.ts.map

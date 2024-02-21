@@ -15,6 +15,12 @@ export async function transformSrtTracks(video) {
          * We need to do before we can use it.
          */
         await track.parse();
+
+        /**
+         * Remove the original
+         */
+        track.element.remove();
+
         /**
          * Add new TextTrack to video
          * We later fill this with the transformed data

@@ -15,6 +15,11 @@ import Cue from './cue.js';
 export default class Track {
     /**
      * @readonly
+     * @type {HTMLTrackElement}
+     */
+    element;
+    /**
+     * @readonly
      * @type {string}
      */
     src;
@@ -65,6 +70,7 @@ export default class Track {
      * @param {HTMLTrackElement} track 
      */
     constructor(track) {
+        this.element = track;
         this.src = track.src;
         this.encoding = track.dataset.encoding;
         this.lang = track.srclang;

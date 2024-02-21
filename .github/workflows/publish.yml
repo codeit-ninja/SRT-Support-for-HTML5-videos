@@ -1,8 +1,9 @@
 name: "Automatic Releaser"
 
-on:
+on: 
   push:
-    branches: [ master ]
+    tags:
+    - 'v2.*'
 
 jobs:
   build:

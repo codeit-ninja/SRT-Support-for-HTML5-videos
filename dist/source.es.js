@@ -77,15 +77,22 @@ class Cue {
  * @returns Cue
  */
 function toVttCue(srtCue) {
-    const convertedCue = {
-        number: parseInt(srtCue.match(/^\d+/g)[0]),
-        timing: {
-            start: srtCue.match(/(\d+:){2}\d+,\d+/g)[0].replace(',', '.'),
-            end: srtCue.match(/(\d+:){2}\d+,\d+/g)[1].replace(',', '.')
-        },
-        text: srtCue.split(/\r?\n/g).slice(2, srtCue.split(/\r?\n/g).length).join('\n')
-    };
-    return new Cue(convertedCue.number, hmsToSeconds(convertedCue.timing.start), hmsToSeconds(convertedCue.timing.end), convertedCue.text);
+    try {
+        if( ! srtCue || srtCue === ' ' ) {
+            return false;
+        }
+        const convertedCue = {
+            number: parseInt(srtCue.match(/^\d+/g)[0]),
+            timing: {
+                start: srtCue.match(/(\d+:){2}\d+,\d+/g)[0].replace(',', '.'),
+                end: srtCue.match(/(\d+:){2}\d+,\d+/g)[1].replace(',', '.')
+            },
+            text: srtCue.split(/\r?\n/g).slice(2, srtCue.split(/\r?\n/g).length).join('\n')
+        };
+        return new Cue(convertedCue.number, hmsToSeconds(convertedCue.timing.start), hmsToSeconds(convertedCue.timing.end), convertedCue.text);
+    } catch(e) {
+        return false;
+    }
 }
 /**
  * Converts a VTT or SRT timing `string`
@@ -121,6 +128,9 @@ function hmsToSeconds(str) {
  * @returns Promise<string>
  */
 async function fetchTrack(src, encoding = 'utf-8') {
+    if( ! encoding || encoding === '' ) {
+        encoding = 'utf-8';
+    }
     return fetch(src).then(r => r.arrayBuffer()).then(r => new TextDecoder(encoding).decode(r));
 }
 
@@ -136,6 +146,11 @@ async function fetchTrack(src, encoding = 'utf-8') {
  * @property {Cue[]}    cues
  */
 class Track {
+    /**
+     * @readonly
+     * @type {HTMLTrackElement}
+     */
+    element;
     /**
      * @readonly
      * @type {string}
@@ -187,17 +202,18 @@ class Track {
      * @param {HTMLTrackElement} track
      */
     constructor(track) {
+        this.element = track;
         this.src = track.src;
         this.encoding = track.dataset.encoding;
         this.lang = track.srclang;
         this.kind = track.kind;
         this.label = track.label;
         this.default = track.default;
-        this.needsTransform = !this.src.endsWith('.vtt');
+        this.needsTransform = !this.src.toLowerCase().endsWith('.vtt');
     }
     async parse() {
-        this.body = await fetchTrack(this.src);
-        this.cues = this.body.split(/\r?\n\r?\n/g).map(toVttCue);
+        this.body = await fetchTrack(this.src, this.encoding);
+        this.cues = this.body.split(/\r?\n\r?\n/g).map(toVttCue).filter(Boolean);
     }
 }
 
@@ -215,6 +231,10 @@ async function transformSrtTracks(video) {
          * We need to do before we can use it.
          */
         await track.parse();
+        /**
+         * Remove the original
+         */
+        track.element.remove();
         /**
          * Add new TextTrack to video
          * We later fill this with the transformed data

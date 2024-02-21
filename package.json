@@ -1,26 +1,27 @@
 {
-  "name": "srt-support-for-html5-videos",
-  "version": "2.5.10",
-  "repository": "https://github.com/codeit-ninja/SRT-Support-for-HTML5-videos",
-  "type": "module",
-  "main": "main.js",
-  "types": "dist/main.d.ts",
-  "author": {
-    "email": "richard@codeit.ninja",
-    "name": "Richard",
-    "url": "https://codeit.ninja"
-  },
-  "scripts": {
-    "dev": "vite",
-    "build": "npm run build:iife && npm run build:esm && tsc",
-    "build:iife": "vite --config vite.config.iife.js build",
-    "build:esm": "vite --config vite.config.esm.js build",
-    "preview": "vite preview",
-    "publish": "npm run build"
-  },
-  "devDependencies": {
-    "rollup-plugin-cleanup": "^3.2.1",
-    "typescript": "^5.3.3",
-    "vite": "^5.1.1"
-  }
+    "name": "srt-support-for-html5-videos",
+    "version": "2.6.10",
+    "repository": "https://github.com/codeit-ninja/SRT-Support-for-HTML5-videos",
+    "type": "module",
+    "main": "main.js",
+    "types": "dist/main.d.ts",
+    "author": {
+        "email": "richard@codeit.ninja",
+        "name": "Richard",
+        "url": "https://codeit.ninja"
+    },
+    "scripts": {
+        "dev": "vite",
+        "build": "rm -rf ./dist && npm run build:iife && npm run build:esm && npm run build:source && tsc",
+        "build:source": "vite --config vite.config.js build",
+        "build:iife": "vite --config vite.config.iife.js build",
+        "build:esm": "vite --config vite.config.esm.js build",
+        "preview": "vite preview",
+        "publish": "npm run build"
+    },
+    "devDependencies": {
+        "rollup-plugin-cleanup": "^3.2.1",
+        "typescript": "^5.3.3",
+        "vite": "^5.1.1"
+    }
 }
