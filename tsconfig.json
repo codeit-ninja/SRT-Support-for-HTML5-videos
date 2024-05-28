@@ -1,5 +1,5 @@
 {
-  "include": ["main.js"],
+  "include": ["./main.js"],
   "compilerOptions": {
     "allowJs": true,
     "declaration": true,

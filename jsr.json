@@ -1,0 +1,11 @@
+{
+    "name": "@codeit/srt-for-html5-videos",
+    "version": "2.6.11",
+    "exports": "./main.d.ts",
+    "publish": {
+        "exclude": [
+            "./assets",
+            "./.github"
+        ]
+    }
+}

@@ -88,4 +88,3 @@ export function fetchTrack(src: string, encoding?: string): Promise<string>;
  */
 export function srt2vtt(srtBody: string): string;
 import Cue from "./cue.js";
-//# sourceMappingURL=helpers.d.ts.map

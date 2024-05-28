@@ -44,4 +44,3 @@ export default class Cue {
      */
     readonly text: string;
 }
-//# sourceMappingURL=cue.d.ts.map

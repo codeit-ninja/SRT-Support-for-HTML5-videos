@@ -69,4 +69,3 @@ export default class Track {
     parse(): Promise<void>;
 }
 import Cue from './cue.js';
-//# sourceMappingURL=track.d.ts.map
