@@ -29,4 +29,5 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Publish to JSR
+        uses: actions/checkout@v4
       - run: npx jsr publish
